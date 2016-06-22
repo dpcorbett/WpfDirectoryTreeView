@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.ComponentModel;
 using System.Windows.Controls;
 using WpfDirectoryTreeView.DataAccess;
 
@@ -9,23 +10,26 @@ namespace WpfDirectoryTreeView
     /// </summary>
     public partial class DirectoryTreeViewControl : UserControl
     {
+        private ItemProvider _itemProvider;
         public DirectoryTreeViewControl()
         {
             InitializeComponent();
 
-            ItemProvider itemProvider = new ItemProvider();
-            itemProvider.PropertyChanged += reloadTreeView;
+            _itemProvider = new ItemProvider();
+            _itemProvider.PropertyChanged += reloadTreeView;
+          //  itemProvider.strPath = "E:\\Burn";
 
-            var items = itemProvider.GetItems("D:\\Dave");
+          //  var items = itemProvider.GetItems("D:\\Dave");
 
-            DataContext = items;
+          //  DataContext = items;
         }
 
-        private void reloadTreeView(object sender, RoutedEventArgs e)
+        public void reloadTreeView(object sender, PropertyChangedEventArgs e)
         {
-            var itemProvider = new ItemProvider();
+            //var i = new PropertyChangedEventArgs(e);
 
-            var items = itemProvider.GetItems("D:\\Dave");
+            var items = _itemProvider.GetItems(e.PropertyName);
+//            var items = _itemProvider.GetItems(_itemProvider.strPath);
 
             DataContext = items;
         }

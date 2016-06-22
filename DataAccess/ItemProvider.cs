@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using WpfDirectoryTreeView.Model;
@@ -38,43 +39,53 @@ namespace WpfDirectoryTreeView.DataAccess
         // Create the OnPropertyChanged method to raise the event
         protected void OnPropertyChanged(string m_strPath)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(m_strPath));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(m_strPath));
+
         }
+
 
         public List<Item> GetItems(string path)
         {
             var items = new List<Item>();
 
-            var dirInfo = new DirectoryInfo(path);
-
-            foreach (var directory in dirInfo.GetDirectories())
+            try
             {
-                var item = new DirectoryItem
+
+                var dirInfo = new DirectoryInfo(path);
+
+                foreach (var directory in dirInfo.GetDirectories())
                 {
-                    Name = directory.Name,
-                    Path = directory.FullName,
-                    Items = GetItems(directory.FullName)
-                };
+                    var item = new DirectoryItem
+                    {
+                        Name = directory.Name,
+                        Path = directory.FullName,
+                        Items = GetItems(directory.FullName)
+                    };
 
-                items.Add(item);
+                    items.Add(item);
+                }
+
+                foreach (var file in dirInfo.GetFiles())
+                {
+                    var item = new FileItem
+                    {
+                        Name = file.Name,
+                        Path = file.FullName
+                    };
+
+                    items.Add(item);
+                }
+                return items;
             }
-
-            foreach (var file in dirInfo.GetFiles())
+            catch (UnauthorizedAccessException uae)
             {
-                var item = new FileItem
-                {
-                    Name = file.Name,
-                    Path = file.FullName
-                };
-
-                items.Add(item);
+                return items;
             }
-
-            return items;
+            catch (Exception e)
+            {
+               return items;
+            }
+            
         }
     }
 }
