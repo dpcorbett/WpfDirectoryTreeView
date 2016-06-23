@@ -54,8 +54,8 @@ namespace WpfDirectoryTreeView.DataAccess
         /// <param name="m_strPath"></param>
         protected void OnPropertyChanged(string m_strPath)
         {
+            // Raise event if property state change has been declared.
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(m_strPath));
-
         }
 
         /// <summary>

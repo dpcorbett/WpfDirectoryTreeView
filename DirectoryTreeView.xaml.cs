@@ -10,27 +10,27 @@ namespace WpfDirectoryTreeView
     /// </summary>
     public partial class DirectoryTreeViewControl : UserControl
     {
+        // Create list for directories and files.
         private ItemProvider _itemProvider;
+
+        /// <summary>
+        /// Initialise gui and item provider, then attaches method to reload tree view.
+        /// </summary>
         public DirectoryTreeViewControl()
         {
             InitializeComponent();
-
             _itemProvider = new ItemProvider();
-            _itemProvider.PropertyChanged += reloadTreeView;
-          //  itemProvider.strPath = "E:\\Burn";
-
-          //  var items = itemProvider.GetItems("D:\\Dave");
-
-          //  DataContext = items;
+            _itemProvider.PropertyChanged += populateTreeView;
         }
 
-        public void reloadTreeView(object sender, PropertyChangedEventArgs e)
+        /// <summary>
+        /// Load and display directory and file list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void populateTreeView(object sender, PropertyChangedEventArgs e)
         {
-            //var i = new PropertyChangedEventArgs(e);
-
             var items = _itemProvider.GetItems(e.PropertyName);
-//            var items = _itemProvider.GetItems(_itemProvider.strPath);
-
             DataContext = items;
         }
     }

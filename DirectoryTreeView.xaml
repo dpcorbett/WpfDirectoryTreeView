@@ -20,11 +20,8 @@
     </UserControl.Resources>
     
     <Grid>
-        <TreeView 
-            Background="Chartreuse"
-            ItemsSource="{Binding}"
-            >
-            
+        <TreeView ItemsSource="{Binding}">
         </TreeView>
     </Grid>
+    
 </UserControl>

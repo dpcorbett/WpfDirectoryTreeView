@@ -8,9 +8,9 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("WpfDirectoryTreeView")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("User control that displays directory and file structure in XAML.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("dppc")]
 [assembly: AssemblyProduct("WpfDirectoryTreeView")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
